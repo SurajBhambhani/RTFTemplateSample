@@ -1,0 +1,37 @@
+package com.sb.rtf;
+
+import java.util.List;
+
+import net.sourceforge.rtf.RTFTemplate;
+/**
+ * This class is to generate a sample contract using RTF Template.
+ * @author Suraj Bhambhani
+ *
+ */
+public class SampleContractGenerator {
+
+	public static void main(String[] args) throws Exception {
+
+		// Source of file to be generated.
+		String rtfSource = "ContractTemplate.rtf";
+
+		// Generate template.
+		RTFTemplate rtfTemplate = RTFHandler.getRTFTemplate(rtfSource);
+
+		// Business Partner
+		List<ContractPartner> contractPartners = ContractPartnerProvider
+				.getBusinessPartner();
+
+		// Generate file.
+		generateFile(rtfTemplate, contractPartners);
+	//	Desktop.getDesktop().open(new File("Contract_Example.rtf"));
+	}
+
+	private static void generateFile(RTFTemplate rtfTemplate,
+			List<ContractPartner> contractPartners) throws Exception {
+		RTFHandler.putList(rtfTemplate, "businessPartner",
+				(ContractPartner) contractPartners.get(0));
+		RTFHandler.generateFiles(rtfTemplate, "SB IT Solution");
+	}
+
+}
